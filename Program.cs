@@ -25,43 +25,12 @@ namespace uol_OOP_2
                 input = Console.ReadLine();
                 if (regex_help.Matches(input).Count == 1)  // They input a help command. Give them help!
                 {
-                    valid = true;
                     Console.WriteLine("To find the difference between two files, type 'diff [filename_1].txt [filename_2].txt' without quote marks.\nThe files must be in the same directory as the program.");
                 }
                 else if (regex_diff.Matches(input).Count == 1)  // They've put in a correctly formatted diff command
                 {
                     valid = true;  // it's safe to split up our command list because it fit our RegEx.
-
-                    char[] charSeperator = new char[] { ' ' };  // Seperate with a space only.
-                    string[] inputs = input.Split(charSeperator, 3, StringSplitOptions.None);
-                    string[] files_to_hash = new string[] { inputs[1].ToString(), inputs[2].ToString() };
-
-                    List<byte[]> hashes = new List<byte[]>();  // Will hold the hash sequences
-
-                    using (SHA256 sha256 = SHA256.Create())
-                    {
-                        foreach (string filename in files_to_hash)
-                        {
-                            FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);  // Initialise file access
-                            fileStream.Position = 0;  // Make sure we're hashing the whole file by putting the pointer to the start
-                            byte[] hash = sha256.ComputeHash(fileStream);
-                            hashes.Add(hash);
-                        }
-                    }
-
-                    if (hashes[0].SequenceEqual(hashes[1]))  // Compare hashes
-                    {
-                        // They are the same
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are the same");
-                    }
-                    else
-                    {
-                        // They are not the same
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
-                    }
-                    Console.ResetColor();
+                    isSame(input);
                 }
                 else
                 {
@@ -69,6 +38,48 @@ namespace uol_OOP_2
                 }
             }
             Console.ReadKey();
+        }
+
+        static void isSame(string input)
+        {
+
+            char[] charSeperator = new char[] { ' ' };  // Seperate with a space only.
+            string[] inputs = input.Split(charSeperator, 3, StringSplitOptions.None);
+            string[] files_to_hash = new string[] { inputs[1].ToString(), inputs[2].ToString() };
+
+            List<byte[]> hashes = new List<byte[]>();  // Will hold the hash sequences
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                foreach (string filename in files_to_hash)
+                {
+                    try
+                    {
+                        FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);  // Initialise file access
+                        fileStream.Position = 0;  // Make sure we're hashing the whole file by putting the pointer to the start
+                        byte[] hash = sha256.ComputeHash(fileStream);
+                        hashes.Add(hash);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Environment.Exit(2);  // Exit with Windows' file not found code.
+                    }
+                }
+            }
+
+            if (hashes[0].SequenceEqual(hashes[1]))  // Compare hashes
+            {
+                // They are the same
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are the same");
+            }
+            else
+            {
+                // They are not the same
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
+            }
+            Console.ResetColor();
         }
     }
 }
