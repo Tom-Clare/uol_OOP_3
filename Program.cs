@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace uol_OOP_2
+namespace uol_OOP_3
 {
-    static class Program
+    public static class Program
     {
         static Regex regex_help = new Regex(@"^h$", RegexOptions.Compiled | RegexOptions.IgnoreCase);  // Matches a single h character
         static Regex regex_diff = new Regex(@"^diff \w+\.txt \w+\.txt$", RegexOptions.Compiled);  // Matches a correctly formatted diff command
 
-        static void Main(string[] args)
+        public static void Main()
         {
             Console.WriteLine("For help, type h");
 
@@ -30,7 +30,7 @@ namespace uol_OOP_2
                 else if (regex_diff.Matches(input).Count == 1)  // They've put in a correctly formatted diff command
                 {
                     valid = true;  // it's safe to split up our command list because it fit our RegEx.
-                    isSame(input);
+                    Equate(input);
                 }
                 else
                 {
@@ -40,7 +40,7 @@ namespace uol_OOP_2
             Console.ReadKey();
         }
 
-        static void isSame(string input)
+        public static void Equate(string input)
         {
 
             char[] charSeperator = new char[] { ' ' };  // Seperate with a space only.
