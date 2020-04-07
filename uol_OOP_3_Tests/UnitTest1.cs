@@ -8,11 +8,6 @@ namespace uol_OOP_3_Tests
     [TestClass]
     public class UnitTest1
     {
-        private static void clearStringWriter(StringWriter sw)
-        {
-            StringBuilder sb = sw.GetStringBuilder();
-            sb.Remove(0, sb.Length);
-        }
 
         [TestMethod]
         public void Test_Identical_Files()  // Large test covers the a to z of the program.

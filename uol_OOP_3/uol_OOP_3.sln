@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uol_OOP_3", "uol_OOP_3.csproj", "{F116DF0A-D654-4B2E-9DA6-D00BDFAEB78C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uol_OOP_3_Tests", "..\..\uol_OOP_3_Tests\uol_OOP_3_Tests\uol_OOP_3_Tests\uol_OOP_3_Tests.csproj", "{4639FCBC-4EC7-400A-9C23-59595603C1D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uol_OOP_3_Tests", "..\uol_OOP_3_Tests\uol_OOP_3_Tests.csproj", "{4639FCBC-4EC7-400A-9C23-59595603C1D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
