@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Security.Cryptography;
 
 namespace uol_OOP_3
 {
@@ -49,22 +48,9 @@ namespace uol_OOP_3
 
             List<byte[]> hashes = new List<byte[]>();  // Will hold the hash sequences
 
-            using (SHA256 sha256 = SHA256.Create())
+            foreach (string filename in files_to_hash)
             {
-                foreach (string filename in files_to_hash)
-                {
-                    try
-                    {
-                        FileStream fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);  // Initialise file access
-                        fileStream.Position = 0;  // Make sure we're hashing the whole file by putting the pointer to the start
-                        byte[] hash = sha256.ComputeHash(fileStream);
-                        hashes.Add(hash);
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Environment.Exit(2);  // Exit with Windows' file not found code.
-                    }
-                }
+                hashes.Add(Operations.getHash(filename));
             }
 
             if (hashes[0].SequenceEqual(hashes[1]))  // Compare hashes
@@ -78,8 +64,18 @@ namespace uol_OOP_3
                 // They are not the same
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
+
+                // need to send it to some method to further analyse
+                AnalyseFiles(files_to_hash);
             }
             Console.ResetColor();
+        }
+
+        public static void AnalyseFiles(string[] files_to_analyse)
+        {
+            // Turn filenames into objects we can work with.
+            // filetoanalyse FileA = new filetoanalyse(files_to_analyse[0]);
+            // filetoanalyse FileB = new filetoanalyse(files_to_analyse[1]);
         }
     }
 }

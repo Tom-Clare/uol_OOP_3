@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace uol_OOP_3_Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class TestEquate
     {
 
         [TestMethod]
