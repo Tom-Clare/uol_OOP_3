@@ -6,11 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace uol_OOP_3_Tests
 {
     [TestClass]
-    public class TestEquate
+    public class TestProgram
     {
-
         [TestMethod]
-        public void Test_Identical_Files()  // Large test covers the a to z of the program.
+        public void testIdenticalFiles()  // Large test covers the a to z of the program.
         {
             using (var sw = new StringWriter())
             {
@@ -24,7 +23,7 @@ namespace uol_OOP_3_Tests
         }
 
         [TestMethod]
-        public void Test_Differing_Files()
+        public void testDifferingFiles()
         {
             using (var sw = new StringWriter())
             {

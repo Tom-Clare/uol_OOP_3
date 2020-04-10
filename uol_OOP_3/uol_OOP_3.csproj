@@ -98,6 +98,9 @@
     <Folder Include=".git\refs\tags\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalysingFile.cs" />
+    <Compile Include="ProjectFile.cs" />
+    <Compile Include="LogFile.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>

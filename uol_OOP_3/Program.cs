@@ -66,16 +66,33 @@ namespace uol_OOP_3
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
 
                 // need to send it to some method to further analyse
-                AnalyseFiles(files_to_hash);
+                bool success = AnalyseFiles(files_to_hash);
             }
             Console.ResetColor();
         }
 
-        public static void AnalyseFiles(string[] files_to_analyse)
+        public static bool AnalyseFiles(string[] files_to_analyse)
         {
             // Turn filenames into objects we can work with.
-            // filetoanalyse FileA = new filetoanalyse(files_to_analyse[0]);
-            // filetoanalyse FileB = new filetoanalyse(files_to_analyse[1]);
+            try
+            {
+                AnalysingFile FileA = new AnalysingFile(files_to_analyse[0]);
+            }
+            catch (FileNotFoundException e)
+            {
+                return false;
+            }
+
+            try
+            {
+                AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);
+            }
+            catch (FileNotFoundException e)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
