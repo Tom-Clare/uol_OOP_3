@@ -73,24 +73,19 @@ namespace uol_OOP_3
 
         public static bool AnalyseFiles(string[] files_to_analyse)
         {
-            // Turn filenames into objects we can work with.
-            try
-            {
-                AnalysingFile FileA = new AnalysingFile(files_to_analyse[0]);
-            }
-            catch (FileNotFoundException e)
+            // Check if filenames will cause errors
+            bool instantiable_filenames = AnalysingFile.CheckFiles(files_to_analyse);
+            if (!instantiable_filenames)
             {
                 return false;
             }
 
-            try
-            {
-                AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);
-            }
-            catch (FileNotFoundException e)
-            {
-                return false;
-            }
+            // Turn filenames into objects we can work with.
+            AnalysingFile FileA = new AnalysingFile(files_to_analyse[0]);
+            AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);  // Maybe not the right thing to do yet - unsure
+
+
+            KeyValuePair<AnalysingFile.line_status, string> lineA = FileA.GetLine();
 
             return true;
         }

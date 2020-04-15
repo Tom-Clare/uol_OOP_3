@@ -12,15 +12,28 @@ namespace uol_OOP_3
         {
             if (!File.Exists("log.txt"))
             {
-                File.Create("log.txt");
+                File.Create("log.txt").Dispose();  // Dispose saves the file onto the system
             }
 
             return new LogFile("log.txt");
         }
 
-        public LogFile (string filename) : base (filename)
+        private LogFile (string filename) : base (filename)
         {
 
+        }
+
+        public void Write (string message)
+        {
+            using (System.IO.StreamWriter sw = File.AppendText("log.txt"))
+            {
+                sw.WriteLine(message);  // Appends to end of string. Lines are delimited by Environment.NewLine
+            }
+        }
+
+        public void Clear ()
+        {
+            File.WriteAllText("log.txt", String.Empty);  // Replaces all text with an empty string
         }
     }
 }
