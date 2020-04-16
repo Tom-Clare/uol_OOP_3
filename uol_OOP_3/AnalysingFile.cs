@@ -36,6 +36,26 @@ namespace uol_OOP_3
             return result;
         }
 
+        public List<string> GetAllLines()
+        {
+            List<string> all_lines = new List<string>();
+            bool end_of_file = false;
+            while (!end_of_file)
+            {
+                KeyValuePair<line_status, string> line = GetLine();
+                if (line.Key == line_status.end_of_file)
+                {
+                    end_of_file = true;
+                }
+                else
+                {
+                    all_lines.Add(line.Value);
+                }
+            }
+
+            return all_lines;
+        }
+
         public static bool CheckFiles (string[] filenames)
         {
             try

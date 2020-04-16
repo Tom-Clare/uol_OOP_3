@@ -82,10 +82,29 @@ namespace uol_OOP_3
 
             // Turn filenames into objects we can work with.
             AnalysingFile FileA = new AnalysingFile(files_to_analyse[0]);
-            AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);  // Maybe not the right thing to do yet - unsure
+            AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);
+            List<string> all_lines_A = FileA.GetAllLines();
+            List<string> all_lines_B = FileB.GetAllLines();
 
+            // Get the count of the larger array
+            int max_lines = all_lines_B.Count;
+            if (all_lines_A.Count > all_lines_B.Count) {
+                max_lines = all_lines_A.Count;
+            }
 
-            KeyValuePair<AnalysingFile.line_status, string> lineA = FileA.GetLine();
+            for (int i = 0; i <= max_lines; i++)  // for every line in the largest file
+            {
+                string line_A = all_lines_A[i];
+                string line_B = all_lines_B[i];
+
+                // are they the same?
+                // If not...
+                //      A.Except(B) - these words have been removed from B
+                //      B.Except(A) - these words have been added to B
+                //      Union the lines as a 2D array<word, unchanged/added/removed enum>
+                //      Loop through third array and print needed colour
+
+            }
 
             return true;
         }
