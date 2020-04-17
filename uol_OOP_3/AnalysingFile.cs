@@ -6,6 +6,8 @@ using System.IO;
 
 namespace uol_OOP_3
 {
+
+
     public class AnalysingFile : ProjectFile
     {
         public StreamReader sr;
@@ -77,6 +79,22 @@ namespace uol_OOP_3
             }
 
             return true;
+        }
+
+        public static AnalysingLine[] GenerateAnalysingLine(string line)
+        {
+            // We'll first split by space characters
+            string[] words = line.Split(' ');
+
+            int i = 0;
+            List<AnalysingLine> word_data = new List<AnalysingLine>();
+            foreach (string word in words)
+            {
+                word_data.Add(new AnalysingLine(i, word, AnalysingLine.statuses.unclassified));
+                i++;
+            }
+
+            return word_data.ToArray();
         }
     }
 }

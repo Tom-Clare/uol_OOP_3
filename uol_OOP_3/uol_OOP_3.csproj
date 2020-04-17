@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalysingFile.cs" />
+    <Compile Include="AnalysingLine.cs" />
     <Compile Include="ProjectFile.cs" />
     <Compile Include="LogFile.cs" />
     <Compile Include="Operations.cs" />

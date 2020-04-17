@@ -97,12 +97,27 @@ namespace uol_OOP_3
                 string line_A = all_lines_A[i];
                 string line_B = all_lines_B[i];
 
+                if (line_A == line_B)
+                {
+                    continue;  // Skip the rest of the loop if no comparisons need to be made.
+                }
+
+                // generate id, word, status fields for each word of line
+                AnalysingLine[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
+                AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
+
+                List<AnalysingLine> removed_words = word_list_a.Except<AnalysingLine>(word_list_b).ToList();
+
                 // are they the same?
                 // If not...
                 //      A.Except(B) - these words have been removed from B
                 //      B.Except(A) - these words have been added to B
-                //      Union the lines as a 2D array<word, unchanged/added/removed enum>
-                //      Loop through third array and print needed colour
+                //      Union the lines
+                //      Loop through arrays in a for loop using the some counter
+                //      Create an Acounter and Bcounter
+                //      Compare lineA[iA] and lineA[iB]
+                //      Figure out priority
+                //      Increase counter of whichever line had one of their words printed or increment both if they're the same
 
             }
 
