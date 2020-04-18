@@ -9,7 +9,7 @@ namespace uol_OOP_3
 {
     public class Operations
     {
-        public static byte[] getHash (string filename)
+        public static byte[] GetHash (string filename)
         {
             byte[] hash = new byte[] { };
 
@@ -26,6 +26,15 @@ namespace uol_OOP_3
             }
 
             return hash;
+        }
+
+        public static int GetBiggest (int a, int b)
+        {
+            if (a > b)
+            {
+                return a;
+            }
+            return b;
         }
     }
 }

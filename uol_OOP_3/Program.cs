@@ -50,7 +50,7 @@ namespace uol_OOP_3
 
             foreach (string filename in files_to_hash)
             {
-                hashes.Add(Operations.getHash(filename));
+                hashes.Add(Operations.GetHash(filename));
             }
 
             if (hashes[0].SequenceEqual(hashes[1]))  // Compare hashes
@@ -94,8 +94,25 @@ namespace uol_OOP_3
 
             for (int i = 0; i <= max_lines; i++)  // for every line in the largest file
             {
-                string line_A = all_lines_A[i];
-                string line_B = all_lines_B[i];
+                string line_A;
+                string line_B;
+                try
+                {
+                    line_A = all_lines_A[i];
+                }
+                catch
+                {
+                    line_A = "";
+                }
+                
+                try
+                {
+                    line_B = all_lines_B[i];
+                }
+                catch
+                {
+                    line_B = "";
+                }
 
                 if (line_A == line_B)
                 {
@@ -107,11 +124,25 @@ namespace uol_OOP_3
                 AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
 
                 List<AnalysingLine> removed_words = word_list_a.Except<AnalysingLine>(word_list_b).ToList();
+                List<AnalysingLine> added_words = word_list_b.Except<AnalysingLine>(word_list_a).ToList();
 
-                // are they the same?
-                // If not...
-                //      A.Except(B) - these words have been removed from B
-                //      B.Except(A) - these words have been added to B
+                return true;  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                int counter_a = 0;
+                int counter_b = 0;
+                while (true)
+                {
+                    // This is where we actually display them
+                    if (word_list_a[counter_a] == word_list_b[counter_b])
+                    {
+                        Console.WriteLine(word_list_a[counter_a].word);
+                    }
+                    else if (removed_words.Contains(word_list_b[counter_b]))
+                    {
+                        //Console.ForegroundColor
+                    }
+                }
+
                 //      Union the lines
                 //      Loop through arrays in a for loop using the some counter
                 //      Create an Acounter and Bcounter
