@@ -58,17 +58,18 @@ namespace uol_OOP_3
                 // They are the same
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are the same");
+                Console.ResetColor();
             }
             else
             {
                 // They are not the same
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
+                Console.ResetColor();
 
                 // need to send it to some method to further analyse
                 bool success = AnalyseFiles(files_to_hash);
             }
-            Console.ResetColor();
         }
 
         public static bool AnalyseFiles(string[] files_to_analyse)
@@ -116,6 +117,7 @@ namespace uol_OOP_3
 
                 if (line_A == line_B)
                 {
+                    Console.WriteLine(line_A);
                     continue;  // Skip the rest of the loop if no comparisons need to be made.
                 }
 
@@ -126,22 +128,71 @@ namespace uol_OOP_3
                 List<AnalysingLine> removed_words = word_list_a.Except<AnalysingLine>(word_list_b).ToList();
                 List<AnalysingLine> added_words = word_list_b.Except<AnalysingLine>(word_list_a).ToList();
 
-                return true;  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Copy line B
+                AnalysingLine[] combined_lines = new AnalysingLine[word_list_b.Length];
+                word_list_b.CopyTo(combined_lines, 0); // To new array starting from position 0
+                List<AnalysingLine> combined_lines_list = combined_lines.ToList();
+                // Foreach on new array
+                foreach (AnalysingLine word in combined_lines_list)
+                {
+                // If current element's ID is in removed_words:
+                //    Insert in this place
+                //    Change status of word to removed
+                //    Re-fresh array's IDs (probs need to refresh IDs of removed_words and added_words)
+                // If current element's ID is in added_words:
+                //    Change status of word to added
 
+                // Loop through and display, I think
+                }
+                
+
+
+                // First method - ID issues
+                int generic_counter = 0;
+                int max_words = word_list_a.Count() + added_words.Count() - 1;
                 int counter_a = 0;
                 int counter_b = 0;
-                while (true)
+                while (generic_counter <= max_words)
                 {
                     // This is where we actually display them
-                    if (word_list_a[counter_a] == word_list_b[counter_b])
+                    if (word_list_a[counter_a].Equals(word_list_b[counter_b]))
                     {
-                        Console.WriteLine(word_list_a[counter_a].word);
+                        Console.Write(word_list_a[counter_a].word);
+                        counter_a++;
+                        counter_b++;
+                        generic_counter++;
                     }
-                    else if (removed_words.Contains(word_list_b[counter_b]))
+                    else if (removed_words.Contains(word_list_a[counter_a]))
                     {
-                        //Console.ForegroundColor
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(word_list_a[counter_a].word);
+                        Console.ResetColor();
+                        counter_a++;
+                        generic_counter++;
                     }
+                    else if (added_words.Contains(word_list_b[counter_b]))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(word_list_b[counter_b].word);
+                        Console.ResetColor();
+                        counter_b++;
+                        generic_counter++;
+                    }
+                    else
+                    {
+                        Console.Write("Somethin wacky be goin down, dude.");
+                        counter_a++;
+                        counter_b++;
+                        generic_counter++;
+                    }
+
+                    if (generic_counter <= max_words) // If this isn't the last word of the line
+                    {
+                        Console.Write(" ");
+                    }
+                    
                 }
+                Console.WriteLine();  // Finish the line
 
                 //      Union the lines
                 //      Loop through arrays in a for loop using the some counter
