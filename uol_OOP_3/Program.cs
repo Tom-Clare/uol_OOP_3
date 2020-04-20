@@ -125,56 +125,67 @@ namespace uol_OOP_3
                 AnalysingLine[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
                 AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
 
-                List<AnalysingLine> removed_words = word_list_a.Except<AnalysingLine>(word_list_b).ToList();
-                List<AnalysingLine> added_words = word_list_b.Except<AnalysingLine>(word_list_a).ToList();
-
-                // Copy line B
-                AnalysingLine[] combined_lines = new AnalysingLine[word_list_b.Length];
-                word_list_b.CopyTo(combined_lines, 0); // To new array starting from position 0
-                List<AnalysingLine> combined_lines_list = combined_lines.ToList();
-                // Foreach on new array
-                foreach (AnalysingLine word in combined_lines_list)
-                {
-                // If current element's ID is in removed_words:
-                //    Insert in this place
-                //    Change status of word to removed
-                //    Re-fresh array's IDs (probs need to refresh IDs of removed_words and added_words)
-                // If current element's ID is in added_words:
-                //    Change status of word to added
-
-                // Loop through and display, I think
-                }
-                
-
-
                 // First method - ID issues
                 int generic_counter = 0;
-                int max_words = word_list_a.Count() + added_words.Count() - 1;
                 int counter_a = 0;
                 int counter_b = 0;
-                while (generic_counter <= max_words)
+                bool change_found = false;
+                while (counter_a < word_list_a.Length && counter_b < word_list_b.Length)
                 {
-                    // This is where we actually display them
-                    if (word_list_a[counter_a].Equals(word_list_b[counter_b]))
+                    if (word_list_a[counter_a].word == word_list_b[counter_b].word)
                     {
+                        //  Words are the same
                         Console.Write(word_list_a[counter_a].word);
                         counter_a++;
                         counter_b++;
                         generic_counter++;
                     }
-                    else if (removed_words.Contains(word_list_a[counter_a]))
+                    else if (word_list_a[counter_a + 1].word == word_list_b[counter_b].word)
                     {
+                        //  word_list_a[counter_a] has been removed from B
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(word_list_a[counter_a].word);
                         Console.ResetColor();
                         counter_a++;
                         generic_counter++;
                     }
-                    else if (added_words.Contains(word_list_b[counter_b]))
+                    else if (counter_a + 2 < word_list_a.Length && word_list_a[counter_a + 2].word == word_list_b[counter_b + 1].word)
                     {
+                        //  word_list_a[counter_a] and word_list_a[counter_a + 1] have been removed from B
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(word_list_b[counter_b].word);
+                        Console.ResetColor();
+                        counter_a++;
+                        generic_counter++;
+                    }
+                    else if (word_list_a[counter_a].word == word_list_b[counter_b + 1].word)
+                    {
+                        // word_list_b[counter_b] has been added
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write(word_list_b[counter_b].word);
                         Console.ResetColor();
+                        counter_b++;
+                        generic_counter++;
+                    }
+                    else if (counter_b + 2 < word_list_b.Length && word_list_a[counter_a + 1].word == word_list_b[counter_b + 2].word)
+                    {
+                        // word_list_b[counter_b] and word_list_b[counter_b + 1] have been added
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(word_list_b[counter_b].word);
+                        Console.ResetColor();
+                        counter_b++;
+                        generic_counter++;
+                    }
+                    else if (word_list_a[counter_a + 1].word == word_list_b[counter_b + 1].word)
+                    {
+                        // word A replaced by B
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(word_list_a[counter_a].word);
+                        Console.Write(" ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(word_list_b[counter_b].word);
+                        Console.ResetColor();
+                        counter_a++;
                         counter_b++;
                         generic_counter++;
                     }
@@ -186,21 +197,42 @@ namespace uol_OOP_3
                         generic_counter++;
                     }
 
-                    if (generic_counter <= max_words) // If this isn't the last word of the line
+                    if (counter_a != word_list_a.Length && counter_b != word_list_b.Length)
                     {
+                        // If this is not the last word of the line (and display of the line will continue)
                         Console.Write(" ");
                     }
-                    
+                }
+
+                if (counter_a == word_list_a.Length)
+                {
+                    // end of line A reached, print rest of B
+                    while (counter_b < word_list_b.Length)
+                    {
+                        Console.Write(word_list_b[counter_b].word);
+                        counter_b++;
+                        if (counter_b != word_list_b.Length)
+                        {
+                            // Don't add a space if this is the last word of the line
+                            Console.Write(" ");
+                        }
+                    }
+                }
+                if (counter_b == word_list_b.Length)
+                {
+                    // end of line B reached, print rest of A
+                    while (counter_a < word_list_a.Length)
+                    {
+                        Console.Write(word_list_a[counter_a].word);
+                        counter_a++;
+                        if (counter_a != word_list_a.Length)
+                        {
+                            // Don't add a space if this is the last word of the line
+                            Console.Write(" ");
+                        }
+                    }
                 }
                 Console.WriteLine();  // Finish the line
-
-                //      Union the lines
-                //      Loop through arrays in a for loop using the some counter
-                //      Create an Acounter and Bcounter
-                //      Compare lineA[iA] and lineA[iB]
-                //      Figure out priority
-                //      Increase counter of whichever line had one of their words printed or increment both if they're the same
-
             }
 
             return true;
