@@ -41,6 +41,8 @@ namespace uol_OOP_3
 
         public static void Equate(string input)
         {
+            LogFile log = LogFile.Init();
+            log.Write("-- Program started --");
 
             char[] charSeperator = new char[] { ' ' };  // Seperate with a space only.
             string[] inputs = input.Split(charSeperator, 3, StringSplitOptions.None);
@@ -58,6 +60,7 @@ namespace uol_OOP_3
                 // They are the same
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are the same");
+                log.Write($"{files_to_hash[0]} and {files_to_hash[1]} are the same");
                 Console.ResetColor();
             }
             else
@@ -65,14 +68,15 @@ namespace uol_OOP_3
                 // They are not the same
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
+                log.Write($"{files_to_hash[0]} and {files_to_hash[1]} are not the same");
                 Console.ResetColor();
 
                 // need to send it to some method to further analyse
-                bool success = AnalyseFiles(files_to_hash);
+                bool success = AnalyseFiles(files_to_hash, log);
             }
         }
 
-        public static bool AnalyseFiles(string[] files_to_analyse)
+        public static bool AnalyseFiles(string[] files_to_analyse, LogFile log)
         {
             // Check if filenames will cause errors
             bool instantiable_filenames = AnalysingFile.CheckFiles(files_to_analyse);
@@ -88,10 +92,7 @@ namespace uol_OOP_3
             List<string> all_lines_B = FileB.GetAllLines();
 
             // Get the count of the larger array
-            int max_lines = all_lines_B.Count;
-            if (all_lines_A.Count > all_lines_B.Count) {
-                max_lines = all_lines_A.Count;
-            }
+            int max_lines = Operations.GetBiggest(all_lines_A.Count, all_lines_B.Count);
 
             for (int i = 0; i <= max_lines; i++)  // for every line in the largest file
             {
@@ -121,80 +122,88 @@ namespace uol_OOP_3
                     continue;  // Skip the rest of the loop if no comparisons need to be made.
                 }
 
+                // At this point, we know the lines aren't the same
+                log.Write($"Difference found on line {i+1}");
+
                 // generate id, word, status fields for each word of line
                 AnalysingLine[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
                 AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
 
-                // First method - ID issues
-                int generic_counter = 0;
+                List<string> removed_words = new List<string>();
+                List<string> added_words = new List<string>();
+
                 int counter_a = 0;
                 int counter_b = 0;
-                bool change_found = false;
                 while (counter_a < word_list_a.Length && counter_b < word_list_b.Length)
                 {
                     if (word_list_a[counter_a].word == word_list_b[counter_b].word)
                     {
                         //  Words are the same
-                        Console.Write(word_list_a[counter_a].word);
-                        counter_a++;
+                        Console.Write(word_list_a[counter_a].word);  // Display only one of the identical words
+
+                        counter_a++;  // We don't want to compare either word next iteration
                         counter_b++;
-                        generic_counter++;
                     }
                     else if (word_list_a[counter_a + 1].word == word_list_b[counter_b].word)
                     {
                         //  word_list_a[counter_a] has been removed from B
+                        removed_words.Add(word_list_a[counter_a].word);  // Make a note for logging purposes
+
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(word_list_a[counter_a].word);
+                        Console.Write(word_list_a[counter_a].word);  // Display removed word
                         Console.ResetColor();
+
                         counter_a++;
-                        generic_counter++;
                     }
                     else if (counter_a + 2 < word_list_a.Length && word_list_a[counter_a + 2].word == word_list_b[counter_b + 1].word)
                     {
                         //  word_list_a[counter_a] and word_list_a[counter_a + 1] have been removed from B
+                        removed_words.Add(word_list_a[counter_a].word);  // Make a note for logging purposes
+
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(word_list_b[counter_b].word);
+                        Console.Write(word_list_b[counter_b].word);  // Display removed word
                         Console.ResetColor();
+
                         counter_a++;
-                        generic_counter++;
                     }
                     else if (word_list_a[counter_a].word == word_list_b[counter_b + 1].word)
                     {
                         // word_list_b[counter_b] has been added
+                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
+
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(word_list_b[counter_b].word);
+                        Console.Write(word_list_b[counter_b].word);  // Display added word
                         Console.ResetColor();
+
                         counter_b++;
-                        generic_counter++;
                     }
                     else if (counter_b + 2 < word_list_b.Length && word_list_a[counter_a + 1].word == word_list_b[counter_b + 2].word)
                     {
                         // word_list_b[counter_b] and word_list_b[counter_b + 1] have been added
+                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
+
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(word_list_b[counter_b].word);
+                        Console.Write(word_list_b[counter_b].word);  // Display added word
                         Console.ResetColor();
+
                         counter_b++;
-                        generic_counter++;
                     }
                     else if (word_list_a[counter_a + 1].word == word_list_b[counter_b + 1].word)
                     {
                         // word A replaced by B
+                        removed_words.Add(word_list_a[counter_a].word);  // Make a note for logging purposes
+                        added_words.Add(word_list_b[counter_b].word);
+
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(word_list_a[counter_a].word);
+                        Console.Write(word_list_a[counter_a].word);  // Display removed word
                         Console.Write(" ");
+
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(word_list_b[counter_b].word);
+                        Console.Write(word_list_b[counter_b].word);  // Display added word
                         Console.ResetColor();
-                        counter_a++;
+
+                        counter_a++;  // We don't want to compare either word next iteration
                         counter_b++;
-                        generic_counter++;
-                    }
-                    else
-                    {
-                        Console.Write("Somethin wacky be goin down, dude.");
-                        counter_a++;
-                        counter_b++;
-                        generic_counter++;
                     }
 
                     if (counter_a != word_list_a.Length && counter_b != word_list_b.Length)
@@ -233,6 +242,12 @@ namespace uol_OOP_3
                     }
                 }
                 Console.WriteLine();  // Finish the line
+
+                if (0 < removed_words.Count())
+                    log.Write($"Removed word/s: {Operations.DumpList(removed_words)}");
+
+                if (0 < added_words.Count())
+                    log.Write($"Added word/s: {Operations.DumpList(added_words)}");
             }
 
             return true;

@@ -36,5 +36,22 @@ namespace uol_OOP_3
             }
             return b;
         }
+
+        public static string DumpList (List<string> list)
+        {
+            string dumped_list = "";
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                dumped_list = String.Concat(dumped_list, list[i]);
+                if (i != list.Count - 1)
+                {
+                    // This is not the last word in the list
+                    dumped_list = String.Concat(dumped_list, ", ");
+                }
+            }
+
+            return dumped_list;
+        }
     }
 }
