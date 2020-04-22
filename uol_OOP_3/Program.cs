@@ -155,35 +155,13 @@ namespace uol_OOP_3
 
                         counter_a++;
                     }
-                    else if (counter_a + 2 < word_list_a.Length && word_list_a[counter_a + 2].word == word_list_b[counter_b + 1].word)
+                    else if (word_list_a[counter_a].word == word_list_b[counter_b + 1].word)
                     {
-                        //  word_list_a[counter_a] and word_list_a[counter_a + 1] have been removed from B
-                        removed_words.Add(word_list_a[counter_a].word);  // Make a note for logging purposes
+                        //  word_list_a[counter_a] has been removed from B
+                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
 
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(word_list_b[counter_b].word);  // Display removed word
-                        Console.ResetColor();
-
-                        counter_a++;
-                    }
-                    else if (word_list_a[counter_a].word == word_list_b[counter_b + 1].word)
-                    {
-                        // word_list_b[counter_b] has been added
-                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(word_list_b[counter_b].word);  // Display added word
-                        Console.ResetColor();
-
-                        counter_b++;
-                    }
-                    else if (counter_b + 2 < word_list_b.Length && word_list_a[counter_a + 1].word == word_list_b[counter_b + 2].word)
-                    {
-                        // word_list_b[counter_b] and word_list_b[counter_b + 1] have been added
-                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(word_list_b[counter_b].word);  // Display added word
                         Console.ResetColor();
 
                         counter_b++;
@@ -204,6 +182,51 @@ namespace uol_OOP_3
 
                         counter_a++;  // We don't want to compare either word next iteration
                         counter_b++;
+                    }
+                    else if (counter_a + 2 < word_list_a.Length && word_list_a[counter_a + 2].word == word_list_b[counter_b + 1].word)
+                    {
+                        //  word_list_a[counter_a] and word_list_a[counter_a + 1] have been removed from B
+                        removed_words.Add(word_list_a[counter_a].word);  // Make a note for logging purposes
+                        removed_words.Add(word_list_a[counter_a + 1].word);
+                        added_words.Add(word_list_b[counter_b].word);
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(word_list_a[counter_a].word);  // Display removed words
+                        Console.Write(" ");
+                        Console.Write(word_list_a[counter_a + 1].word);
+                        Console.Write(" ");
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(word_list_b[counter_b].word);  // Display added word
+ 
+                        Console.ResetColor();
+
+                        counter_a++;
+                        counter_a++;
+                        counter_b++;
+                    }
+                    else if (counter_b + 2 < word_list_b.Length && word_list_a[counter_a + 1].word == word_list_b[counter_b + 2].word)
+                    {
+                        //  word_list_a[counter_a] has been removed
+                        //  word_list_b[counter_b] and word_list_b[counter_b + 1] have been added
+                        added_words.Add(word_list_b[counter_b].word);  // Make a note for logging purposes
+                        added_words.Add(word_list_b[counter_b + 1].word);
+                        removed_words.Add(word_list_a[counter_a].word);
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(word_list_a[counter_a].word);  // Display removed word
+                        Console.Write(" ");
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(word_list_b[counter_b].word);  // Display added words
+                        Console.Write(" ");
+                        Console.Write(word_list_b[counter_b + 1].word);
+
+                        Console.ResetColor();
+
+                        counter_b++;
+                        counter_b++;
+                        counter_a++;
                     }
 
                     if (counter_a != word_list_a.Length && counter_b != word_list_b.Length)

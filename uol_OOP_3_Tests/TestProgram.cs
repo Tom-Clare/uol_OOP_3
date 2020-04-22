@@ -55,11 +55,30 @@ Git associates a remote URL with a name, and your default remote is usually call
                 uol_OOP_3.Program.Equate("diff GitRepositories_3a.txt GitRepositories_3b.txt");  // Provided files are not identical
                 string result = sw.ToString().Trim();
                 string expected = @"GitRepositories_3a.txt and GitRepositories_3b.txt are not the same
-After initializing a pull request, you you'll will see a review page that shows a high-level overview of the changes between your branch (the compare branch) and the repository's base branch. You can add a summary of the proposed changes, review the changes made by commits, add labels, milestones, and assignees, and @mention individual contributors or teams. For more information, see ""Creating a pull request.""
+After initializing a pull request, you'll you will see a review page that shows a high-level overview of the changes between your branch (the compare branch) and the repository's base branch. You can add a summary of the proposed changes, review the changes made by commits, add labels, milestones, and assignees, and @mention individual contributors or teams. For more information, see ""Creating a pull request.""
 
 Once you've created a pull request, you can push commits from your topic branch to add them to your the existing pull request. These commits will appear in chronological order within your pull request and the changes will be visible in the ""Files changed"" tab.
 
 Other contributors can review your proposed changes, change, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";  // Might change as development progresses.
+                Assert.AreEqual(expected, result);
+            }
+        }
+
+        [TestMethod]
+        public void testDifferingFiles3()
+        {
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);  // Catch output
+
+                uol_OOP_3.Program.Equate("diff GitRepositories_3b.txt GitRepositories_3a.txt");  // Provided files are not identical
+                string result = sw.ToString().Trim();
+                string expected = @"GitRepositories_3b.txt and GitRepositories_3a.txt are not the same
+After initializing a pull request, you will you'll see a review page that shows a high-level overview of the changes between your branch (the compare branch) and the repository's base branch. You can add a summary of the proposed changes, review the changes made by commits, add labels, milestones, and assignees, and @mention individual contributors or teams. For more information, see ""Creating a pull request.""
+
+Once you've created a pull request, you can push commits from your topic branch to add them to the your existing pull request. These commits will appear in chronological order within your pull request and the changes will be visible in the ""Files changed"" tab.
+
+Other contributors can review your proposed change, changes, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";  // Might change as development progresses.
                 Assert.AreEqual(expected, result);
             }
         }
