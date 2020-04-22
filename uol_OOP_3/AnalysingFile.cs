@@ -81,16 +81,16 @@ namespace uol_OOP_3
             return true;
         }
 
-        public static AnalysingLine[] GenerateAnalysingLine(string line)
+        public static AnalysingWord[] GenerateAnalysingWords(string line)
         {
             // We'll first split by space characters
             string[] words = line.Split(' ');
 
             int i = 0;
-            List<AnalysingLine> word_data = new List<AnalysingLine>();
+            List<AnalysingWord> word_data = new List<AnalysingWord>();
             foreach (string word in words)
             {
-                word_data.Add(new AnalysingLine(i, word, AnalysingLine.statuses.unclassified));
+                word_data.Add(new AnalysingWord(i, word, AnalysingWord.statuses.unclassified));
                 i++;
             }
 

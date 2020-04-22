@@ -122,18 +122,18 @@ namespace uol_OOP_3
                 }
 
                 // generate id, word, status fields for each word of line
-                AnalysingLine[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
-                AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
+                AnalysingWord[] word_list_a = AnalysingFile.GenerateAnalysingWords(line_A);
+                AnalysingWord[] word_list_b = AnalysingFile.GenerateAnalysingWords(line_B);
 
-                List<AnalysingLine> removed_words = word_list_a.Except<AnalysingLine>(word_list_b).ToList();
-                List<AnalysingLine> added_words = word_list_b.Except<AnalysingLine>(word_list_a).ToList();
+                List<AnalysingWord> removed_words = word_list_a.Except<AnalysingWord>(word_list_b).ToList();
+                List<AnalysingWord> added_words = word_list_b.Except<AnalysingWord>(word_list_a).ToList();
 
                 // Copy line B
-                AnalysingLine[] combined_lines = new AnalysingLine[word_list_b.Length];
+                AnalysingWord[] combined_lines = new AnalysingWord[word_list_b.Length];
                 word_list_b.CopyTo(combined_lines, 0); // To new array starting from position 0
-                List<AnalysingLine> combined_lines_list = combined_lines.ToList();
+                List<AnalysingWord> combined_lines_list = combined_lines.ToList();
                 // Foreach on new array
-                foreach (AnalysingLine word in combined_lines_list)
+                foreach (AnalysingWord word in combined_lines_list)
                 {
                 // If current element's ID is in removed_words:
                 //    Insert in this place

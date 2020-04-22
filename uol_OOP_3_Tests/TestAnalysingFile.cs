@@ -68,10 +68,10 @@ namespace uol_OOP_3_Tests
             CollectionAssert.AreEqual(expected, result);
         }
 
-        private class AnalysingLineComparer : Comparer<AnalysingLine>
+        private class AnalysingLineComparer : Comparer<AnalysingWord>
         {
             // This will override how the AnalysingLine instances are compared within MSTest.
-            public override int Compare(AnalysingLine a, AnalysingLine b)
+            public override int Compare(AnalysingWord a, AnalysingWord b)
             {
                 // We need to override the way that AnalysingLine objects are compared.
                 int equal = -1; // Assume a < b until proven equal
@@ -87,33 +87,33 @@ namespace uol_OOP_3_Tests
         }
 
         [TestMethod]
-        public void testGetAnalysingLine()
+        public void testGetAnalysingWords()
         {
             string example_line = "This is an example line";
-            AnalysingLine[] result = AnalysingFile.GenerateAnalysingLine(example_line);
+            AnalysingWord[] result = AnalysingFile.GenerateAnalysingWords(example_line);
 
-            AnalysingLine word1 = new AnalysingLine(0, "This", AnalysingLine.statuses.unclassified);
-            AnalysingLine word2 = new AnalysingLine(1, "is", AnalysingLine.statuses.unclassified);
-            AnalysingLine word3 = new AnalysingLine(2, "an", AnalysingLine.statuses.unclassified);
-            AnalysingLine word4 = new AnalysingLine(3, "example", AnalysingLine.statuses.unclassified);
-            AnalysingLine word5 = new AnalysingLine(4, "line", AnalysingLine.statuses.unclassified);
-            AnalysingLine[] expected = new AnalysingLine[] { word1, word2, word3, word4, word5 };
+            AnalysingWord word1 = new AnalysingWord(0, "This", AnalysingWord.statuses.unclassified);
+            AnalysingWord word2 = new AnalysingWord(1, "is", AnalysingWord.statuses.unclassified);
+            AnalysingWord word3 = new AnalysingWord(2, "an", AnalysingWord.statuses.unclassified);
+            AnalysingWord word4 = new AnalysingWord(3, "example", AnalysingWord.statuses.unclassified);
+            AnalysingWord word5 = new AnalysingWord(4, "line", AnalysingWord.statuses.unclassified);
+            AnalysingWord[] expected = new AnalysingWord[] { word1, word2, word3, word4, word5 };
 
             CollectionAssert.AreEqual(expected, result, new AnalysingLineComparer());
         }
 
         [TestMethod]
-        public void testGetAnalysingLine2()
+        public void testGetAnalysingWords2()
         {
             string example_line = "This, is an example line!!";
-            AnalysingLine[] result = AnalysingFile.GenerateAnalysingLine(example_line);
+            AnalysingWord[] result = AnalysingFile.GenerateAnalysingWords(example_line);
 
-            AnalysingLine word1 = new AnalysingLine(0, "This,", AnalysingLine.statuses.unclassified);
-            AnalysingLine word2 = new AnalysingLine(1, "is", AnalysingLine.statuses.unclassified);
-            AnalysingLine word3 = new AnalysingLine(2, "an", AnalysingLine.statuses.unclassified);
-            AnalysingLine word4 = new AnalysingLine(3, "example", AnalysingLine.statuses.unclassified);
-            AnalysingLine word5 = new AnalysingLine(4, "line!!", AnalysingLine.statuses.unclassified);
-            AnalysingLine[] expected = new AnalysingLine[] { word1, word2, word3, word4, word5 };
+            AnalysingWord word1 = new AnalysingWord(0, "This,", AnalysingWord.statuses.unclassified);
+            AnalysingWord word2 = new AnalysingWord(1, "is", AnalysingWord.statuses.unclassified);
+            AnalysingWord word3 = new AnalysingWord(2, "an", AnalysingWord.statuses.unclassified);
+            AnalysingWord word4 = new AnalysingWord(3, "example", AnalysingWord.statuses.unclassified);
+            AnalysingWord word5 = new AnalysingWord(4, "line!!", AnalysingWord.statuses.unclassified);
+            AnalysingWord[] expected = new AnalysingWord[] { word1, word2, word3, word4, word5 };
 
             CollectionAssert.AreEqual(expected, result, new AnalysingLineComparer());
         }
