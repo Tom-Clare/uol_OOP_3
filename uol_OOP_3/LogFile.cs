@@ -25,6 +25,7 @@ namespace uol_OOP_3
 
         public void Write (string message)
         {
+            //  Append given message to the end of log.txt
             using (System.IO.StreamWriter sw = File.AppendText("log.txt"))
             {
                 sw.WriteLine(message);  // Appends to end of string. Lines are delimited by Environment.NewLine
@@ -33,6 +34,7 @@ namespace uol_OOP_3
 
         public void Clear ()
         {
+            //  Deletes all content in log.txt
             File.WriteAllText("log.txt", String.Empty);  // Replaces all text with an empty string
         }
     }

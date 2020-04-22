@@ -81,20 +81,10 @@ namespace uol_OOP_3
             return true;
         }
 
-        public static AnalysingLine[] GenerateAnalysingLine(string line)
+        public static string[] GenerateAnalysingLine(string line)
         {
-            // We'll first split by space characters
-            string[] words = line.Split(' ');
-
-            int i = 0;
-            List<AnalysingLine> word_data = new List<AnalysingLine>();
-            foreach (string word in words)
-            {
-                word_data.Add(new AnalysingLine(i, word, AnalysingLine.statuses.unclassified));
-                i++;
-            }
-
-            return word_data.ToArray();
+            // Split given string by space and return as array
+            return line.Split(' ');
         }
     }
 }

@@ -6,13 +6,13 @@ using System.IO;
 
 namespace uol_OOP_3
 {
-    public class ProjectFile
+    public abstract class ProjectFile
     {
         public string _filename { get; }
 
         public ProjectFile (string filename)
         {
-            // we are given the filename
+            //  Check the file exists before allowing instantiation
             if (File.Exists(filename))
             {
                 _filename = filename;
@@ -21,10 +21,6 @@ namespace uol_OOP_3
             {
                 throw new FileNotFoundException("Given file does not exist");
             }
-            
-            // We want to set our file_handler with the filestream object here
-
-            // We can then have other methods to interact with the file that we can offload to AnalysingFile and LogFile.
         }
     }
 }

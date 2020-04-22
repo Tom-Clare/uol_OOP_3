@@ -28,7 +28,7 @@ namespace uol_OOP_3
                 }
                 else if (regex_diff.Matches(input).Count == 1)  // They've put in a correctly formatted diff command
                 {
-                    valid = true;  // it's safe to split up our command list because it fit our RegEx.
+                    valid = true;  // it's safe to procceed because the command fits our RegEx
                     Equate(input);
                 }
                 else
@@ -41,18 +41,19 @@ namespace uol_OOP_3
 
         public static void Equate(string input)
         {
+            //  Performs a comparison on the two files on a correctly formatted input
             LogFile log = LogFile.Init();
             log.Write("-- Program started --");
 
-            char[] charSeperator = new char[] { ' ' };  // Seperate with a space only.
+            char[] charSeperator = new char[] { ' ' };  // Seperate with a space
             string[] inputs = input.Split(charSeperator, 3, StringSplitOptions.None);
-            string[] files_to_hash = new string[] { inputs[1].ToString(), inputs[2].ToString() };
+            string[] files_to_hash = new string[] { inputs[1].ToString(), inputs[2].ToString() };  // Only the second and third elements are of interest
 
             List<byte[]> hashes = new List<byte[]>();  // Will hold the hash sequences
 
             foreach (string filename in files_to_hash)
             {
-                hashes.Add(Operations.GetHash(filename));
+                hashes.Add(Operations.GetHash(filename));  // Fill hashes List with file hashes
             }
 
             if (hashes[0].SequenceEqual(hashes[1]))  // Compare hashes
@@ -73,6 +74,8 @@ namespace uol_OOP_3
 
                 // need to send it to some method to further analyse
                 bool success = AnalyseFiles(files_to_hash, log);
+                if (!success)
+                    Environment.Exit(2);  // Exit with Windows' File not Found error code
             }
         }
 
@@ -85,7 +88,7 @@ namespace uol_OOP_3
                 return false;
             }
 
-            // Turn filenames into objects we can work with.
+            // Turn filenames into data we can work with.
             AnalysingFile FileA = new AnalysingFile(files_to_analyse[0]);
             AnalysingFile FileB = new AnalysingFile(files_to_analyse[1]);
             List<string> all_lines_A = FileA.GetAllLines();
@@ -119,19 +122,21 @@ namespace uol_OOP_3
                 if (line_A == line_B)
                 {
                     Console.WriteLine(line_A);
-                    continue;  // Skip the rest of the loop if no comparisons need to be made.
+                    continue;  // Skip the rest of the loop if no comparisons need to be made on this line
                 }
 
                 // At this point, we know the lines aren't the same
                 log.Write($"Difference found on line {i+1}");
 
                 // generate id, word, status fields for each word of line
-                AnalysingLine[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
-                AnalysingLine[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
+                string[] word_list_a = AnalysingFile.GenerateAnalysingLine(line_A);
+                string[] word_list_b = AnalysingFile.GenerateAnalysingLine(line_B);
 
+                // Create containers for words of interest existing on this line
                 List<string> removed_words = new List<string>();
                 List<string> added_words = new List<string>();
 
+                // Begin analysation of the line
                 int counter_a = 0;
                 int counter_b = 0;
                 while (counter_a < word_list_a.Length && counter_b < word_list_b.Length)

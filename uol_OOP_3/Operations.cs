@@ -7,10 +7,11 @@ using System.Security.Cryptography;
 
 namespace uol_OOP_3
 {
-    public class Operations
+    public static class Operations
     {
         public static byte[] GetHash (string filename)
         {
+            //  Return the SHA256 representation of a given filename 
             byte[] hash = new byte[] { };
 
             SHA256 sha256 = SHA256.Create();
@@ -22,7 +23,7 @@ namespace uol_OOP_3
             }
             catch (FileNotFoundException e)
             {
-                Environment.Exit(2);  // Exit with Windows' file not found code.
+                Environment.Exit(2);  // Exit gracefully with Windows' file not found code
             }
 
             return hash;
@@ -30,6 +31,7 @@ namespace uol_OOP_3
 
         public static int GetBiggest (int a, int b)
         {
+            //  Simply find and return the larger of two integers
             if (a > b)
             {
                 return a;
@@ -39,6 +41,7 @@ namespace uol_OOP_3
 
         public static string DumpList (List<string> list)
         {
+            //  Convert a list of strings into one printable string seperated by a comma and a space
             string dumped_list = "";
 
             for (int i = 0; i < list.Count; i++)
