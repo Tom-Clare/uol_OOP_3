@@ -19,27 +19,31 @@ namespace uol_OOP_3
 
         public AnalysingFile(string filename) : base(filename)
         {
-            sr = new StreamReader(filename);
+            sr = new StreamReader(filename);  // Now available for all methods
         }
 
         public KeyValuePair<line_status, string> GetLine()
         {
+            // Return single line of the file or tell caller the file has ended
             KeyValuePair<line_status, string> result = new KeyValuePair<line_status, string>();
-            var next_line = sr.ReadLine();
+            var next_line = sr.ReadLine();  // Read the next line from wherever the internal pointer is onwards
 
             if (next_line == null)
             {
+                // This is the last line of the file
                 result = new KeyValuePair<line_status, string>(line_status.end_of_file, "");
             }
             else
             {
                 result = new KeyValuePair<line_status, string>(line_status.line, next_line);
             }
+
             return result;
         }
 
         public List<string> GetAllLines()
         {
+            // Get every line of the file and return in List of strings
             List<string> all_lines = new List<string>();
             bool end_of_file = false;
             while (!end_of_file)
@@ -60,6 +64,7 @@ namespace uol_OOP_3
 
         public static bool CheckFiles (string[] filenames)
         {
+            // Attempt to instantiate files and return the all clear if no errors were generated
             try
             {
                 AnalysingFile FileA = new AnalysingFile(filenames[0]);

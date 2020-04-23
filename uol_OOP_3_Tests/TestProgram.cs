@@ -40,7 +40,7 @@ You can only push to two types of URL url addresses:
 
 An HTTPS URL like https://github.com/user/repo.git
 An SSH URL, like git@github.com:user/repo.git
-Git associates a remote URL with a name, and your default remote is usually called origin.";  // Might change as development progresses.
+Git associates a remote URL with a name, and your default remote is usually called origin.";
                 Assert.AreEqual(expected, result);
             }
         }
@@ -59,7 +59,7 @@ After initializing a pull request, you'll you will see a review page that shows 
 
 Once you've created a pull request, you can push commits from your topic branch to add them to your the existing pull request. These commits will appear in chronological order within your pull request and the changes will be visible in the ""Files changed"" tab.
 
-Other contributors can review your proposed changes, change, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";  // Might change as development progresses.
+Other contributors can review your proposed changes, change, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";
                 Assert.AreEqual(expected, result);
             }
         }
@@ -78,7 +78,7 @@ After initializing a pull request, you will you'll see a review page that shows 
 
 Once you've created a pull request, you can push commits from your topic branch to add them to the your existing pull request. These commits will appear in chronological order within your pull request and the changes will be visible in the ""Files changed"" tab.
 
-Other contributors can review your proposed change, changes, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";  // Might change as development progresses.
+Other contributors can review your proposed change, changes, add review comments, contribute to the pull request discussion, and even add commits to the pull request.";
                 Assert.AreEqual(expected, result);
             }
         }
